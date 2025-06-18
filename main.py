@@ -2,10 +2,14 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request, Query
-from includes.utils import list_monitors_and_windows
+from starlette.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Query, HTTPException
+from includes.utils import list_monitors_and_windows , capture , stream_frames
+
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 @app.get("/")
 async def serve_index():
@@ -15,9 +19,11 @@ async def serve_index():
 async def fetch_data():
     return list_monitors_and_windows()
 
-@app.post("/share")
-async def share(type: str = Query(..., description="Type of data to share (e.g., 'monitor', 'window')"), id: str = Query(..., description="ID of the monitor or window to share")):
-    return True
+@app.get("/stream")
+def stream(id: str = Query(...), type: str = Query(...)):
+    if type not in ("monitor", "window"):
+        raise HTTPException(status_code=400, detail="type must be 'monitor' or 'window'")
+    return StreamingResponse(stream_frames(type, id), media_type="multipart/x-mixed-replace; boundary=frame")
 
 if __name__ == "__main__":
     import uvicorn

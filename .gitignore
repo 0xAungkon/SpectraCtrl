@@ -1,0 +1,57 @@
+# Python bytecode
+*.pyc
+*.pyo
+*.pyd
+
+# C extensions
+*.so
+*.dll
+*.dylib
+
+# Compiled binary
+*.bin
+*.exe
+*.out
+*.a
+*.lib
+
+# Temporary files and directories
+__pycache__
+.tmp
+.cache
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs and editors configuration
+.idea/*
+.vscode/*
+*~
+.#*
+*.suo
+*.user
+*.log
+*.pid
+*.authinfo.*
+
+# Virtual environment files
+venv/
+env/
+.venv/
+env-*/
+venv-*
+
+# Package management
+__pypackages__
+.pip-cache
+.mypy_cache
+.pytest_cache
+.tox/
+.virtualenvs/
+.venvs/
+.envs/
+.pydistutils.cfg
+.pylintrc
+.flake8
+setuptoolsCache/
+easy-install-*
