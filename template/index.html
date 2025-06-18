@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Screen Share</title>
+</head>
+<body>
+  <button onclick="startScreenShare()">Share Screen</button>
+  <video id="screen" autoplay playsinline style="width: 100%; height: auto;"></video>
+
+  <script>
+    async function startScreenShare() {
+      try {
+        const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        console.log("MediaStream:", stream);
+
+        const track = stream.getVideoTracks()[0];
+        console.log(track); // Mi
+
+        const videoTrack = stream.getVideoTracks()[0];
+        if (videoTrack) {
+          console.log("Video Track Settings:", videoTrack.getSettings());
+          console.log("Video Track Constraints:", videoTrack.getConstraints());
+          console.log("Video Track Capabilities:", videoTrack.getCapabilities());
+        }
+
+        const audioTrack = stream.getAudioTracks()[0];
+        if (audioTrack) {
+          console.log("Audio Track Settings:", audioTrack.getSettings());
+          console.log("Audio Track Constraints:", audioTrack.getConstraints());
+          console.log("Audio Track Capabilities:", audioTrack.getCapabilities());
+        }
+
+        const videoElement = document.getElementById("screen");
+        videoElement.srcObject = stream;
+        videoElement.play();
+      } catch (err) {
+        console.error("Screen share error:", err);
+      }
+    }
+  </script>
+</body>
+</html>
