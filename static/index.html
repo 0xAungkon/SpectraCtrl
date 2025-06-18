@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+  <title>SpectraCtrl - Clean White UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    :root {
+      --primary: #1e90ff;
+      --bg: #ffffff;
+      --bg-semi: #f9fafb;
+      --text-primary: #111827;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: var(--primary);
+      border-radius: 10px;
+      border: 2px solid var(--bg);
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    a:focus-visible {
+      outline-offset: 2px;
+      outline-color: var(--primary);
+    }
+    nav ul li a.active, nav ul li a:hover {
+      background: var(--primary);
+      color: var(--bg);
+      font-weight: 700;
+    }
+    .glass-card {
+      background: var(--bg-semi);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+    .glass-card:hover {
+      background: #0184ff54;
+    }
+    [data-tooltip] {
+      position: relative;
+      cursor: help;
+    }
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 50%;
+      bottom: 120%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: var(--bg);
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      z-index: 20;
+    }
+    [data-tooltip]::after {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="flex h-screen max-w-full select-none">
+
+  <!-- Sidebar -->
+<nav class="w-56 bg-[var(--bg-semi)] flex flex-col py-8 px-6 border-r border-[var(--border)] h-screen justify-between" role="navigation" aria-label="Main sidebar">
+  <div>
+    <h1 class="text-3xl font-extrabold mb-12 tracking-tight text-[var(--text-primary)] select-text">SpectraCtrl</h1>
+    <ul class="flex flex-col gap-4 text-sm font-semibold text-[var(--text-muted)]" id="sidebar-tabs">
+      <li><a href="#" data-tab="share" class="active block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="0" role="tab" aria-selected="true" aria-controls="share-panel" id="tab-share">Share</a></li>
+      <li><a href="#" data-tab="connections" class="block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="-1" role="tab" aria-selected="false" aria-controls="connections-panel" id="tab-connections">Connections</a></li>
+      <li><a href="#" data-tab="about" class="block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="-1" role="tab" aria-selected="false" aria-controls="about-panel" id="tab-about">About</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="flex items-center gap-3 text-sm px-3 py-4 border-t border-[var(--border)]">
+      <button id="themeToggle" class="flex items-center gap-2 px-3 py-2 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] transition focus:outline-none" aria-label="Toggle theme">
+        <svg id="themeIcon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path id="iconPath" d="M12 3v1m0 16v1m8.66-12.66l-.71.71M4.05 19.95l-.71.71M21 12h1M2 12H1m16.24 5.66l-.71-.71M5.66 5.66l-.71-.71M12 6a6 6 0 100 12 6 6 0 000-12z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span id="themeLabel">Light</span>
+      </button>
+    </div>
+    <div class="pt-6 text-xs text-[var(--text-muted)] font-medium px-3">v1.0.0 &mdash; &copy; 2025</div>
+  </div>
+</nav>
+
+  
+  <!-- Main content -->
+  <main class="flex-1 p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent">
+
+    <section class="max-w-6xl mx-auto space-y-6">
+
+      <div id="share-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-share">
+        <h2 class="text-2xl font-bold text-var(--text-primary) tracking-tight mb-2">Monitors</h2>
+        <div id="monitors" class="grid grid-cols-1 sm:grid-cols-2 gap-5"></div>
+        <h2 class="text-2xl font-bold text-var(--text-primary) tracking-tight mt-12 mb-2">Windows</h2>
+        <div id="windows" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5"></div>
+      </div>
+
+      <div id="connections-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-connections" hidden>
+        <h2 class="text-3xl font-bold text-var(--text-primary) mb-4">Connections</h2>
+        <p class="text-var(--text-muted)">No active connections currently.</p>
+      </div>
+
+      <div id="about-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-about" hidden>
+        <h2 class="text-3xl font-bold text-var(--text-primary) mb-4">About SpectraCtrl</h2>
+        <p class="text-var(--text-muted) max-w-prose">
+          SpectraCtrl v1.0.0 &mdash; Futuristic remote control and screen sharing software built for GNOME Xorg with FastAPI backend and modern web UI.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const API_URL = 'http://localhost:8000/fetch';
+
+  async function fetchData() {
+    const res = await fetch(API_URL, { headers: { accept: 'application/json' } });
+    if (!res.ok) throw new Error('Failed to fetch');
+    return res.json();
+  }
+
+  function createMonitorCard(monitor) {
+    return `
+      <article class="glass-card p-5 cursor-pointer select-text" tabindex="0" role="button" aria-label="Monitor ${monitor.monitor_id}" data-type="monitor" data-id="${monitor.monitor_id}">
+        <h3 class="text-lg font-semibold text-var(--text-primary) truncate" data-tooltip="${monitor.monitor_id}">${monitor.monitor_id}</h3>
+        <p class="mt-1 text-sm text-var(--text-muted) font-mono">Resolution: ${monitor.resolution}</p>
+        <p class="text-sm text-var(--text-muted) font-mono">Aspect Ratio: ${monitor.aspect_ratio.toFixed(2)}</p>
+      </article>
+    `;
+  }
+
+  function createWindowCard(win) {
+    return `
+      <article class="glass-card p-5 cursor-pointer select-text" tabindex="0" role="button" aria-label="Window ${win.window_name}" data-type="window" data-id="${win.window_id}">
+        <h3 class="text-base font-semibold text-var(--text-primary) truncate" data-tooltip="${win.window_name}">${win.window_name}</h3>
+        <p class="mt-1 text-xs text-var(--text-muted) font-mono">App: ${win.application}</p>
+        <p class="text-xs text-var(--text-muted) font-mono">Resolution: ${win.resolution}</p>
+        <p class="text-xs text-var(--text-muted) font-mono">Aspect Ratio: ${win.aspect_ratio.toFixed(2)}</p>
+        <p class="text-xs mt-2 text-gray-400 font-mono truncate" data-tooltip="Window ID: ${win.window_id}">ID: ${win.window_id}</p>
+      </article>
+    `;
+  }
+
+  function onItemClick(type, id) {
+    alert(`Clicked ${type} with ID: ${id}`);
+  }
+
+  async function render() {
+    try {
+      const data = await fetchData();
+      const monitorsEl = document.getElementById('monitors');
+      const windowsEl = document.getElementById('windows');
+      monitorsEl.innerHTML = data.monitors.map(createMonitorCard).join('');
+      windowsEl.innerHTML = data.windows.map(createWindowCard).join('');
+
+      [...monitorsEl.children, ...windowsEl.children].forEach(el => {
+        el.addEventListener('click', () => onItemClick(el.dataset.type, el.dataset.id));
+        el.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onItemClick(el.dataset.type, el.dataset.id);
+          }
+        });
+      });
+    } catch {
+      document.getElementById('monitors').innerHTML = '<p class="text-red-600 font-semibold">Failed to load monitors.</p>';
+      document.getElementById('windows').innerHTML = '<p class="text-red-600 font-semibold">Failed to load windows.</p>';
+    }
+  }
+
+  const tabs = document.querySelectorAll('#sidebar-tabs a');
+  const panels = {
+    share: document.getElementById('share-panel'),
+    connections: document.getElementById('connections-panel'),
+    about: document.getElementById('about-panel'),
+  };
+
+  function onTabClick(type = 'tab', id = null) {
+    alert(`Tab clicked: ${type}${id ? ' - ' + id : ''}`);
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', e => {
+      e.preventDefault();
+      const selectedTab = tab.dataset.tab;
+      tabs.forEach(t => {
+        t.classList.toggle('active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+        t.tabIndex = t === tab ? 0 : -1;
+      });
+      Object.entries(panels).forEach(([key, panel]) => {
+        panel.hidden = key !== selectedTab;
+      });
+      onTabClick(selectedTab);
+    });
+  });
+
+  render();
+</script>
+<script>
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const iconPath = document.getElementById('iconPath');
+  const themeLabel = document.getElementById('themeLabel');
+  const root = document.documentElement;
+
+  function setTheme(mode) {
+    if (mode === 'dark') {
+      root.style.setProperty('--bg', '#111827');
+      root.style.setProperty('--bg-semi', '#1f2937');
+      root.style.setProperty('--text-primary', '#f9fafb');
+      root.style.setProperty('--text-muted', '#9ca3af');
+      root.style.setProperty('--border', '#374151');
+      iconPath.setAttribute('d', 'M21.75 15.5A9 9 0 1112.5 2.25 7.5 7.5 0 0021.75 15.5z');
+      themeLabel.textContent = 'Dark';
+    } else {
+      root.style.setProperty('--bg', '#ffffff');
+      root.style.setProperty('--bg-semi', '#f9fafb');
+      root.style.setProperty('--text-primary', '#111827');
+      root.style.setProperty('--text-muted', '#6b7280');
+      root.style.setProperty('--border', '#e5e7eb');
+      iconPath.setAttribute('d', 'M12 3v1m0 16v1m8.66-12.66l-.71.71M4.05 19.95l-.71.71M21 12h1M2 12H1m16.24 5.66l-.71-.71M5.66 5.66l-.71-.71M12 6a6 6 0 100 12 6 6 0 000-12z');
+      themeLabel.textContent = 'Light';
+    }
+    localStorage.setItem('theme', mode);
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const current = localStorage.getItem('theme') === 'dark' ? 'light' : 'dark';
+    setTheme(current);
+  });
+
+  const storedTheme = localStorage.getItem('theme') || 'light';
+  setTheme(storedTheme);
+</script>
+</body>
+</html>

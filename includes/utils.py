@@ -41,7 +41,7 @@ def get_window_info():
         })
     return windows
 
-def list_monitors_and_windows_json():
+def list_monitors_and_windows():
     monitors = get_monitor_info()
     windows = get_window_info()
     return {"monitors": monitors, "windows": windows}
