@@ -29,7 +29,7 @@ function createWindowCard(win) {
 }
 
 function onItemClick(type, id) {
-  if(type === 'monitor' || type === 'window') {
+    window.location.hash = `${type}-${id}`;
     const playerTab = document.getElementById('tab-player');
     playerTab.click(); // activate player tab
 
@@ -38,23 +38,24 @@ function onItemClick(type, id) {
     const stream_message = steam_overlay.querySelector('p');
     if (id) {
         steam_overlay.classList.add('hidden');
-      streamImg.src = `/stream?id=${id}&type=${type}`;
-      streamImg.onerror = () => { 
-        steam_overlay.classList.remove('hidden');
-        stream_message.textContent = `Failed to load ${type} stream.`;
-       };
+        streamImg.src = `/stream?id=${id}&type=${type}`;
+        streamImg.onerror = () => { 
+            steam_overlay.classList.remove('hidden');
+            stream_message.textContent = `Failed to load ${type} stream.`;
+        };
     }
-  }
 }
 
 async function render() {
   try {
+    // Fetch data and render monitors and windows
     const data = await fetchData();
     const monitorsEl = document.getElementById('monitors');
     const windowsEl = document.getElementById('windows');
     monitorsEl.innerHTML = data.monitors.map(createMonitorCard).join('');
     windowsEl.innerHTML = data.windows.map(createWindowCard).join('');
 
+    // Add click and keyboard event listeners to each item
     [...monitorsEl.children, ...windowsEl.children].forEach(el => {
       el.addEventListener('click', () => onItemClick(el.dataset.type, el.dataset.id));
       el.addEventListener('keydown', e => {
@@ -65,21 +66,23 @@ async function render() {
       });
     });
   } catch {
+    // Handle errors gracefully
     document.getElementById('monitors').innerHTML = '<p class="text-red-600 font-semibold">Failed to load monitors.</p>';
     document.getElementById('windows').innerHTML = '<p class="text-red-600 font-semibold">Failed to load windows.</p>';
   }
 
-
-  document.getElementById('full_screen').addEventListener('click', () => {
-    const el = document.getElementById('stream_cn');
-    if (!document.fullscreenElement) {
-        el.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
+    // Fullscreen toggle
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+        const el = document.getElementById('stream_cn');
+        if (!document.fullscreenElement) {
+            el.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
     });
 }
 
+// Initial render
 render();
 
 

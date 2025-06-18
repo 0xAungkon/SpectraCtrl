@@ -5,6 +5,7 @@ import time
 import mss
 import io
 from PIL import Image
+from loguru import logger
 
 def get_monitor_info():
     monitors_raw = subprocess.check_output(["xrandr", "--listmonitors"], text=True).strip().split('\n')[1:]
@@ -84,10 +85,16 @@ def stream_frames(mtype: str, mid: str):
         monitor_info = get_monitor_geometry(mid)
         if not monitor_info:
             raise ValueError(f"Monitor {mid} not found")
-        
+    prev_img=None
     while True:
         try:
             img = capture(mtype, mid, monitor_info)
+            if img != prev_img:
+                prev_img = img
+            else:
+                pass
+                logger.info("No change in image, skipping frame")
+            
             yield (b"--frame\r\nContent-Type: image/webp\r\n\r\n" + img + b"\r\n")
         except subprocess.CalledProcessError:
             break
