@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --primary: #1e90ff;
+  --bg: #ffffff;
+  --bg-semi: #f9fafb;
+  --text-primary: #111827;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+a:focus-visible {
+  outline-offset: 2px;
+  outline-color: var(--primary);
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+  background: var(--primary);
+  color: var(--bg);
+  font-weight: 700;
+}
+
+.glass-card {
+  background: var(--bg-semi);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+#stream_cn img{
+    max-height: 100vh;
+    max-width: 100%;
+}
+#stream_cn {
+  background: var(--bg-semi);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: background 0.3s ease;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+.glass-card:hover {
+  background: #0184ff54;
+}
+
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 50%;
+  bottom: 120%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: var(--bg);
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  z-index: 20;
+}
+[data-tooltip]::after {
+  opacity: 0;
+  pointer-events: none;
+}
