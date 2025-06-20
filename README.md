@@ -1,5 +1,6 @@
 # SpectraCtrl
 
+<img src="docs/images/dashboard.png" width="600"/> 
 SpectraCtrl is a Python-based web application that allows you to view a Linux desktop screen in real-time through a web browser using WebSockets. It also provides basic (currently non-interactive with the web UI) mouse and keyboard control demonstrations.
 
 ## Features
@@ -20,3 +21,5 @@ SpectraCtrl is a Python-based web application that allows you to view a Linux de
 - **Environment Management:** `venv`, `pip`
 
 ## FAQ:
+
+- **Username Password?** Your Desktop username & password
