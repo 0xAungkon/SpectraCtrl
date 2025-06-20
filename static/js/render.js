@@ -38,7 +38,11 @@ function onItemClick(type, id) {
     const stream_message = steam_overlay.querySelector('p');
     if (id) {
         steam_overlay.classList.add('hidden');
-        streamImg.src = `/stream?id=${id}&type=${type}`;
+        const steaming_url=`/stream?id=${id}&type=${type}`;
+
+        streamImg.src = steaming_url;
+        localStorage.setItem('streaming_url', steaming_url);
+        
         streamImg.onerror = () => { 
             steam_overlay.classList.remove('hidden');
             stream_message.textContent = `Failed to load ${type} stream.`;
@@ -84,6 +88,4 @@ async function render() {
 
 // Initial render
 render();
-
-
-
+window.setInterval(render, 5000); // Refresh every 5 seconds

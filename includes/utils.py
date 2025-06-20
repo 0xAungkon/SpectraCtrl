@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 import re
 import json
@@ -6,6 +7,15 @@ import mss
 import io
 from PIL import Image
 from loguru import logger
+
+def setup():
+    if shutil.which("xwd") is None:
+        subprocess.run(["sudo", "apt-get", "update"])
+        subprocess.run(["sudo", "apt-get", "install", "-y", "x11-utils"])
+        subprocess.run(["sudo", "apt-get", "install", "-y", "x11-apps"])
+    
+    if shutil.which("xwd") is None:
+        raise RuntimeError("xwd command not found. Please install x11-utils and x11-apps.")
 
 def get_monitor_info():
     monitors_raw = subprocess.check_output(["xrandr", "--listmonitors"], text=True).strip().split('\n')[1:]
@@ -33,8 +43,9 @@ def get_window_info():
         window_id = parts[0]
         x, y, w, h = map(int, parts[2:6])
         wm_class = parts[6]  # e.g. 'google-chrome.Google-chrome'
+
         
-        window_name = parts[9].strip()
+        window_name =  ' '.join(parts[8:]).strip()
         aspect_ratio = round(w / h, 2) if h else None
         app_name = wm_class.split('.')[0] if wm_class else None
         windows.append({
