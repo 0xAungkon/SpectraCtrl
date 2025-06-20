@@ -6,20 +6,22 @@ const panels = {
   connections: document.getElementById('connections-panel'),
   about: document.getElementById('about-panel'),
 };
+const playerTab = document.getElementById('tab-player');
 
-function onTabClick(type = 'tab', id = null) {
-  if(type === 'monitor' || type === 'window') {
-    const playerTab = document.getElementById('tab-player');
-    playerTab.click(); // activate player tab
-
-    const streamImg = document.getElementById('stream');
-    if (id) {
-      streamImg.src = `/stream?id=${id}&type=${type}`;
-      streamImg.onerror = () => { streamImg.src = '/static/images/error.jpg'; };
-    }
+playerTab.onclick = () => {
+  const steam_overlay = document.getElementById('steam_overlay');
+  const streamingUrl = localStorage.getItem('streaming_url');
+  const streamImg = document.getElementById('stream');
+  if (streamImg.src !== streamingUrl && streamingUrl) {
+    steam_overlay.classList.add('hidden');
+    streamImg.src = streamingUrl;
+    streamImg.onerror = () => { 
+      steam_overlay.classList.remove('hidden');
+      stream_message.textContent = `Failed to load ${type} stream.`;
+    };  
   }
+  
 }
-
 
 tabs.forEach(tab => {
   tab.addEventListener('click', e => {
@@ -42,8 +44,7 @@ tabs.forEach(tab => {
 });
 
 
-window.addEventListener('DOMContentLoaded', () => {
-
+function init(){
   const hash = window.location.hash.slice(1);
   if (hash) {
     const targetTab = Array.from(tabs).find(t => t.dataset.tab === hash);
@@ -53,4 +54,12 @@ window.addEventListener('DOMContentLoaded', () => {
   window.setTimeout(() => {
     document.querySelector('body').classList.remove('opacity-0');
   }, 100); // wait for DOM to settle
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  init();
 });
+
+window.onhashchange = () => {
+  init();
+}

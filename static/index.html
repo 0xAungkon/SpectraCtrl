@@ -17,6 +17,7 @@
           <li><a href="#share" data-tab="share" class="active block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="0" role="tab" aria-selected="true" aria-controls="share-panel" id="tab-share">Share</a></li>
           <li><a href="#player" data-tab="player" class="block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="0" role="tab" aria-selected="false" aria-controls="player-panel" id="tab-player">Player</a></li>
           <li><a href="#connections" data-tab="connections" class="block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="-1" role="tab" aria-selected="false" aria-controls="connections-panel" id="tab-connections">Connections</a></li>
+          <li><a href="#settings" data-tab="settings" class="block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="-1" role="tab" aria-selected="false" aria-controls="settings-panel" id="tab-settingss">Settings</a></li>
           <li><a href="#about" data-tab="about" class="block px-4 py-3 rounded-lg transition focus:outline-none" tabindex="-1" role="tab" aria-selected="false" aria-controls="about-panel" id="tab-about">About</a></li>
         </ul>
       </div>
@@ -57,14 +58,18 @@
             </div>
             <img id="stream" class="w-full" src="" alt="Stream Player" />
           </div>
-
         </div>
 
         <div id="connections-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-connections" hidden>
           <h2 class="text-3xl font-bold text-var(--text-primary) mb-4">Connections</h2>
           <p class="text-var(--text-muted)">No active connections currently.</p>
         </div>
-
+        <div id="settings-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-settings" hidden>
+          <h2 class="text-3xl font-bold text-var(--text-primary) mb-4">Settings</h2>
+          <p class="text-var(--text-muted) max-w-prose">
+            SpectraCtrl v1.0.0 &mdash; Futuristic remote control and screen sharing software built for GNOME Xorg with FastAPI backend and modern web UI.
+          </p>
+        </div>
         <div id="about-panel" role="tabpanel" tabindex="0" aria-labelledby="tab-about" hidden>
           <h2 class="text-3xl font-bold text-var(--text-primary) mb-4">About SpectraCtrl</h2>
           <p class="text-var(--text-muted) max-w-prose">
