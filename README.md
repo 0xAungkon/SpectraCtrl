@@ -18,3 +18,5 @@ SpectraCtrl is a Python-based web application that allows you to view a Linux de
 - **Real-time Communication:** WebSockets
 - **Frontend:** HTML, CSS, JavaScript
 - **Environment Management:** `venv`, `pip`
+
+## FAQ:

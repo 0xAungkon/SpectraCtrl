@@ -11,6 +11,10 @@ class OsBasicAuthMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
     
     def check_password(self, username, password):
+        system_username = subprocess.check_output("whoami", shell=True).decode().strip()
+        if system_username != username:
+            return False
+
         try:
             proc = subprocess.run(
                 ['su', '-', username, '-c', 'echo OK'],
