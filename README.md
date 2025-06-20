@@ -13,10 +13,12 @@ SpectraCtrl is a Python-based web application that allows you to view a Linux de
 
 ## Support
 
-- Linux Xorg/X11 -> Yes.
-- Linux Hyperland -> Currently No.
-- Windows -> Currently No.
-- Mac -> Currently No.
+| Platform       | Supported |
+| -------------- | --------- |
+| Linux Xorg/X11 | ✅ Yes     |
+| Linux Wayland  | ❌ No      |
+| Windows        | ❌ No      |
+| Mac            | ❌ No      |
 
 ## Technology Stack
 
