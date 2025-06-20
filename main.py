@@ -4,12 +4,20 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI, Request, Query
 from starlette.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Query, HTTPException
-from includes.utils import list_monitors_and_windows , capture , stream_frames
+from includes.utils import list_monitors_and_windows , capture , stream_frames , setup
+from includes.middlewares import OsBasicAuthMiddleware
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi import Depends
+from fastapi.middleware import Middleware
 
-app = FastAPI()
+
+setup()  # Ensure necessary utilities are set up
+
+app = FastAPI(middleware=[Middleware(OsBasicAuthMiddleware)])
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+
 
 @app.get("/")
 async def serve_index():
