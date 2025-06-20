@@ -84,6 +84,4 @@ async function render() {
 
 // Initial render
 render();
-
-
-
+window.setInterval(render, 5000); // Refresh every 5 seconds

@@ -43,8 +43,9 @@ def get_window_info():
         window_id = parts[0]
         x, y, w, h = map(int, parts[2:6])
         wm_class = parts[6]  # e.g. 'google-chrome.Google-chrome'
+
         
-        window_name = parts[9].strip()
+        window_name =  ' '.join(parts[8:]).strip()
         aspect_ratio = round(w / h, 2) if h else None
         app_name = wm_class.split('.')[0] if wm_class else None
         windows.append({
