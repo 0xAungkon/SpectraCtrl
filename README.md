@@ -11,6 +11,13 @@ SpectraCtrl is a Python-based web application that allows you to view a Linux de
 - FastAPI backend server.
 - Simple HTML/JavaScript frontend.
 
+## Support
+
+- Linux Xorg/X11 -> Yes.
+- Linux Hyperland -> Currently No.
+- Windows -> Currently No.
+- Mac -> Currently No.
+
 ## Technology Stack
 
 - **Backend:** Python, FastAPI, Uvicorn
@@ -20,6 +27,25 @@ SpectraCtrl is a Python-based web application that allows you to view a Linux de
 - **Frontend:** HTML, CSS, JavaScript
 - **Environment Management:** `venv`, `pip`
 
+## Install Instruction
+
+- Clone the repository: `git clone https://github.com/0xAungkon/SpectraCtrl --depth=1`
+- Enter into the Directory: `cd SpectraCtrl`
+- Install Dependency: `pip3 install -r requirements.txt`
+- Run The Application: `python3 main.py`
+
+## Top Priority TODO
+
+- Wayland Support
+- Implement Websocket for faster communication
+- Add Keyboard Control
+- Add Mouse Control
+- Add Application Launch Capability
+- Build Into Single Binary
+- System Wide Installation
+
 ## FAQ:
 
-- **Username Password?** Your Desktop username & password
+- **Username Password?** => Your Desktop username & password
+- **Does it support Windows?** => Currently No but seeking for contribution.
+- **Does it support on Wayland?** => Currently No but seeking for contribution.
